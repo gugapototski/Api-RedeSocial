@@ -1,0 +1,52 @@
+1- o usuario pode se cadastrar, solicitar para deletar sua conta e pode alterar seus dados.
+
+2-Cada usuario pode postar na rede social(não precisa da função de foto) e podem deletar a postagem.
+
+3-Consultar pelo id da postagem e tambem todos os post de um user
+
+4-deve ser possivel cadastrar comentarios comentarios de uma postagem e apagar o mesmo
+
+5-deve ser possivel listar os comentario de um post
+
+6-Deve ser possivel curtir postagem
+
+7-Rank de usuarios populares
+
+8-buscar usuario pelo nome ou apelido
+
+9-Documentar no swagger
+
+model User {
+  id_user         Int     @id @default(autoincrement())
+  nome_apelido_user       String?
+  email_user      String  @unique
+  senha_user      String  
+  confirmar_senha_user    String
+  postagem                Postagem[]
+  comentario              Comentario[]
+
+  @@map("users")
+}
+
+model Postagem {
+  id_postagem         Int     @id @default(autoincrement())
+  id_user_postagem 	      Int
+  user                User  @relation(fields: [id_user_postagem], references: [id_user])
+  postagem_texto      String
+  like_qtd		      Int
+  comentario 	      Comentario[]
+  
+ @@map("postagem")
+}
+
+model Comentario{
+  id_comentario         Int     @id @default(autoincrement())
+  id_postagem  	      Int
+  postagem            Postagem  @relation(fields: [id_postagem], references: [id_postagem])
+  id_user_comentario 	      Int
+  user                User  @relation(fields: [id_user_comentario], references: [id_user])
+  comentario_texto    String
+
+  @@map("comentario")
+}
+
