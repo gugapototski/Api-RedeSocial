@@ -51,7 +51,7 @@ export class UserController {
   @ApiOperation({ summary: 'Buscar um usuário pelo seu nome' })
   @ApiParam({
     name: 'nome_apelido_user',
-    description: 'nome do usuário ou qualque letra relacionada com seu nome.',
+    description: 'nome do usuário ou qualquer letra relacionada com seu nome.',
   })
   @ApiCreatedResponse({ description: 'Usuários compatíveis' })
   async findUserNome(@Param('nome_apelido_user') nome_apelido_user: string) {
