@@ -39,31 +39,6 @@ export class PostagemService {
     }
   }
 
-  async finfAll() {
-    return this.prisma.postagem.findMany();
-  }
-
-  async findPostById(id_postagem: number) {
-    const PostExist = await this.PostExists(id_postagem);
-    if (PostExist) {
-      return this.prisma.postagem.findMany({
-        where: {
-          id_postagem: id_postagem,
-        },
-      });
-    } else {
-      throw new NotFoundException('Postagem não existe!');
-    }
-  }
-
-  async findPostByIdUser(id_user_postagem: number) {
-    return this.prisma.postagem.findMany({
-      where: {
-        id_user_postagem: id_user_postagem,
-      },
-    });
-  }
-
   async likePost(id_postagem: number, userData: PostagemDTO) {
     const postExist = await this.PostExists(id_postagem);
     if (postExist) {
@@ -88,5 +63,30 @@ export class PostagemService {
     } else {
       throw new NotFoundException('Curtiu a postagem!');
     }
+  }
+
+  async finfAll() {
+    return this.prisma.postagem.findMany();
+  }
+
+  async findPostById(id_postagem: number) {
+    const PostExist = await this.PostExists(id_postagem);
+    if (PostExist) {
+      return this.prisma.postagem.findMany({
+        where: {
+          id_postagem: id_postagem,
+        },
+      });
+    } else {
+      throw new NotFoundException('Postagem não existe!');
+    }
+  }
+
+  async findPostByIdUser(id_user_postagem: number) {
+    return this.prisma.postagem.findMany({
+      where: {
+        id_user_postagem: id_user_postagem,
+      },
+    });
   }
 }
