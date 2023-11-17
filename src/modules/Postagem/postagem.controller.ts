@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
 import { PostagemService } from './postagem.service';
 import { PostagemDTO } from './postagem.dto';
 
@@ -24,5 +24,9 @@ export class PostagemController {
     @Get('findPostByIdUser/:id_user_postagem')
     async findPostByIdUser(@Param('id_user_postagem') id_user_postagem: string){
         return this.PostagemService.findPostByIdUser(parseInt(id_user_postagem));
+    }
+    @Put('likePostagem/:id_postagem')
+    async likePostagem(@Param('id_postagem') id_postagem:string, @Body() data: PostagemDTO){
+        return this.PostagemService.likePost(parseInt(id_postagem), data);
     }
 }

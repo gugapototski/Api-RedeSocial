@@ -63,4 +63,31 @@ export class PostagemService{
             },
         });
     }
+
+    async likePost(id_postagem: number, userData: PostagemDTO) {
+        const postExist = await this.PostExists(id_postagem);
+        if (postExist) {
+            const post = await this.prisma.postagem.findUnique({
+                where: {
+                    id_postagem: id_postagem,
+                },
+            });
+    
+            if (post) {
+                await this.prisma.postagem.update({
+                    where: {
+                        id_postagem: id_postagem,
+                    },
+                    data: {
+                        like_qtd: post.like_qtd + 1,
+                    },
+                });
+            } else {
+                throw new NotFoundException('Postagem não existe!');
+            }
+        } else {
+            throw new NotFoundException('Curtiu a postagem!');
+        }
+    }
+    
 }
