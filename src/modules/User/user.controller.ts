@@ -46,7 +46,7 @@ export class UserController {
   @ApiOperation({ summary: 'Ver todos os usuários' })
   @ApiCreatedResponse({ description: 'Busca realizada com sucesso' })
   async findAll() {
-    return this.UserService.finfAll();
+    return this.UserService.findAll();
   }
   @Get('findbyname/:nome_apelido_user')
   @ApiOperation({ summary: 'Buscar um usuário pelo seu nome' })
@@ -56,7 +56,7 @@ export class UserController {
   })
   @ApiCreatedResponse({ description: 'Usuários compatíveis' })
   async findUserNome(@Param('nome_apelido_user') nome_apelido_user: string) {
-    return this.UserService.findUserNome(nome_apelido_user);
+    return this.UserService.findUserByName(nome_apelido_user);
   }
   @Get('ranking/populares')
   async obterRankingUsuariosPopulares() {

@@ -69,10 +69,10 @@ export class UserService {
       throw new NotFoundException('Usuário não existe!');
     }
   }
-  async finfAll() {
+  async findAll() {
     return this.prisma.user.findMany();
   }
-  async findUserNome(nome_apelido_user: string) {
+  async findUserByName(nome_apelido_user: string) {
     const users = await this.prisma.user.findMany({
       where: {
         nome_apelido_user: {
