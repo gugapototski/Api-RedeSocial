@@ -16,6 +16,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { User } from '@prisma/client';
 
 @ApiTags('User')
 @Controller('user')
@@ -56,5 +57,15 @@ export class UserController {
   @ApiCreatedResponse({ description: 'Usuários compatíveis' })
   async findUserNome(@Param('nome_apelido_user') nome_apelido_user: string) {
     return this.UserService.findUserNome(nome_apelido_user);
+  }
+  @Get('ranking/populares')
+  async obterRankingUsuariosPopulares() {
+    try {
+      const usuariosPopulares =
+        await this.UserService.obterRankingUsuariosPopulares();
+      return { success: true, data: usuariosPopulares };
+    } catch (error) {
+      return { success: false, message: error.message };
+    }
   }
 }

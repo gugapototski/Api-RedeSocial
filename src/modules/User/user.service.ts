@@ -1,8 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/database/PrismaService';
 import { UserDTO } from './user.dto';
-import { Prisma } from '@prisma/client';
-
+import { Prisma, User, Postagem } from '@prisma/client';
 @Injectable()
 export class UserService {
   constructor(private prisma: PrismaService) {}
@@ -89,5 +88,27 @@ export class UserService {
         'Nenhum usuário encontrado com o nome fornecido.',
       );
     }
+  }
+  async obterRankingUsuariosPopulares(): Promise<User[]> {
+    const usuarios = await this.prisma.user.findMany({
+      include: {
+        postagem: true,
+      },
+    });
+
+    // Ordenar usuários pelo número total de likes em suas postagens
+    const usuariosOrdenados = usuarios.sort((a, b) => {
+      const likesA = a.postagem.reduce(
+        (total, postagem) => total + (postagem.like_qtd || 0),
+        0,
+      );
+      const likesB = b.postagem.reduce(
+        (total, postagem) => total + (postagem.like_qtd || 0),
+        0,
+      );
+      return likesB - likesA;
+    });
+
+    return usuariosOrdenados;
   }
 }
