@@ -6,5 +6,5 @@ export class PostagemDTO {
   @ApiProperty()
   postagem_texto: string;
   @ApiProperty()
-  like_qtd: number
+  like_qtd: number;
 }
